@@ -3,6 +3,11 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import debounce from 'lodash.debounce';
 import PixabayAxiosSearch from './module/pixabay-api';
+import htmlCode from './module/html-markup';
+import { onCreateMarkup } from './module/gallery-markup';
+
+const body = document.querySelector('body');
+body.insertAdjacentHTML('beforeend', htmlCode);
 
 const inputForm = document.querySelector('#search-form');
 const inputField = document.querySelector('.input-place');
@@ -20,6 +25,20 @@ const endOfScroll = `We're sorry, but you've reached the end of search results.`
 searchButton.setAttribute('disabled', 'disabled');
 
 const searchField = new PixabayAxiosSearch();
+
+if (!sessionStorage.getItem('hasVisitedForm')) {
+  Notiflix.Confirm.show(
+    'Hi, you are at picture-searcher',
+    'Are you going to quick watch?',
+    'Yes',
+    'No',
+    function (isConfirmed) {
+      searchField.restrictions = isConfirmed ? 'false' : 'true';
+      sessionStorage.setItem('hasVisitedForm', true);
+    }
+  );
+}
+
 const visualDecor = new SimpleLightbox('.js-gallery a');
 
 const infinityScrollOptions = {
@@ -33,6 +52,7 @@ const endObserveOption = {
     rootMargin: '100px',
     root: null,
 };
+
 const endObserver = new IntersectionObserver(onEndElementScroll, endObserveOption);
 
 function onFormInputHendler() {
@@ -55,38 +75,6 @@ function onFormInputHendler() {
   }
 }
 
-function onCreateMarkup(hits) {
-    return hits
-        .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
-        <div class="photo-card">
-            <div class="container">
-                <a href="${largeImageURL}">
-                    <img src="${webformatURL}" alt="${tags}" loading="lazy">
-                </a>
-            </div>
-            <div class="info">
-                <p class="info-item">
-                    <b>Likes</b>
-                    <span>${likes}</span>
-                </p>
-                <p class="info-item">
-                    <b>Views</b>
-                    <span>${views}</span>
-                </p>
-                <p class="info-item">
-                    <b>Comments</b>
-                    <span>${comments}</span>
-                </p>
-                <p class="info-item">
-                    <b>Downloads</b>
-                    <span>${downloads}</span>
-                </p>
-            </div>
-        </div>`
-    )
-    .join('');
-}
-
 async function onFormSubmitHendler(evt) {
     evt.preventDefault();
     axiosObserver.unobserve(scrollBreakPoint);
@@ -105,6 +93,7 @@ async function onFormSubmitHendler(evt) {
         Notiflix.Notify.failure(`${onServerFailAlert}`);
     }
 }
+
 async function onScrollEvent(entries) {
     let totalPages = Number(localStorage.getItem('totalPages'));
     if (totalPages < searchField.page) {
@@ -125,6 +114,7 @@ async function onScrollEvent(entries) {
         }
     }
 }
+
 async function getImage() {
     try {
         const response = await searchField.getImage();

@@ -4,14 +4,19 @@ const PIXABAY_API_KEY = '38987421-e938289573b3f0089dcf530c5';
 const PIXABAY_BASE_URL = 'https://pixabay.com/api/';
 
 export default class PixabayAxiosSearch {
-    constructor() {
+    constructor(restrictions = 'false') {
         this.query = '';
         this.image = 'photo';
         this.orientation = 'horizontal';
-        this.restrictions = 'true';
+        this.restrictions = restrictions;
         this.page = 1;
         this.pageSize = 40;
     }
+
+    updateRestrictions(newRestrictions) {
+        this.restrictions = newRestrictions;
+    }
+
     async getImage() {
         const params = new URLSearchParams({
             key: PIXABAY_API_KEY,
@@ -25,6 +30,7 @@ export default class PixabayAxiosSearch {
         const url = `${PIXABAY_BASE_URL}?${params}`;
         return await axios.get(url);
     }
+
     resetPage() {
         this.page = 1;
     }
