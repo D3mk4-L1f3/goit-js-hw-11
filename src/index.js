@@ -126,30 +126,27 @@ async function onScrollEvent(entries) {
     }
 }
 async function getImage() {
-    localStorage.removeItem('totalHits');
     try {
         const response = await searchField.getImage();
-        const hits = response.data.hits;
-        const totalHits = response.data.totalHits;
-        const totalPages = Math.ceil(totalHits / 40);
-        
+        const { hits, totalHits } = response.data;
+        const totalPages = Math.ceil(totalHits / searchField.pageSize);
+
         if (!hits.length) {
-            Notiflix.Notify.failure(`${onNoImgQuery}`);
+            Notiflix.Notify.failure(onNoImgQuery);
+        } else {
+            localStorage.setItem('totalHits', totalHits);
+            localStorage.setItem('totalPages', totalPages);
+
+            galleryContainer.insertAdjacentHTML('beforeend', onCreateMarkup(hits));
+
+            axiosObserver.observe(scrollBreakPoint);
+            visualDecor.refresh();
         }
-
-        localStorage.setItem('totalHits', totalHits);
-        localStorage.setItem('totalPages', totalPages);
-
-        const markup = onCreateMarkup(hits);
-        galleryContainer.insertAdjacentHTML('beforeend', markup);
-
-        axiosObserver.observe(scrollBreakPoint);
-
-        visualDecor.refresh();
     } catch (error) {
-        Notiflix.Notify.failure(`${onServerFailAlert}`);
+        Notiflix.Notify.failure(onServerFailAlert);
     }
 }
+
 async function onEndElementScroll(evt) {
     const isIntersecting = evt[0].isIntersecting;
     if (isIntersecting) {
