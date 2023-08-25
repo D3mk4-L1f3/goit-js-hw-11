@@ -42,15 +42,15 @@ if (!sessionStorage.getItem('hasVisitedForm')) {
 const visualDecor = new SimpleLightbox('.js-gallery a');
 
 const infinityScrollOptions = {
-    rootMargin: '350px',
     root: null,
+    rootMargin: '200px', 
 };
 
 const axiosObserver = new IntersectionObserver(onScrollEvent, infinityScrollOptions);
 
 const endObserveOption = {
-    rootMargin: '100px',
     root: null,
+    rootMargin: '300px',
 };
 
 const endObserver = new IntersectionObserver(onEndElementScroll, endObserveOption);
@@ -122,7 +122,7 @@ async function getImage() {
         const totalPages = Math.ceil(totalHits / searchField.pageSize);
 
         if (!hits.length) {
-            Notiflix.Notify.failure(onNoImgQuery);
+            Notiflix.Notify.info(onNoImgQuery);
         } else {
             localStorage.setItem('totalHits', totalHits);
             localStorage.setItem('totalPages', totalPages);
@@ -132,18 +132,27 @@ async function getImage() {
             axiosObserver.observe(scrollBreakPoint);
             visualDecor.refresh();
         }
+
+        if (searchField.page > totalPages) {
+            endObserver.observe(galleryContainer.lastElementChild);
+        }
+
     } catch (error) {
         Notiflix.Notify.failure(onServerFailAlert);
     }
 }
 
-async function onEndElementScroll(evt) {
-    const isIntersecting = evt[0].isIntersecting;
-    if (isIntersecting) {
+async function onEndElementScroll(entries) {
+    const { isIntersecting, boundingClientRect } = entries[0];
+    if (isIntersecting && boundingClientRect.top <= window.innerHeight) {
         endObserver.unobserve(galleryContainer.lastChild);
         Notiflix.Notify.warning(`${endOfScroll}`);
     }
 }
+
+
+
+
 
 
 
