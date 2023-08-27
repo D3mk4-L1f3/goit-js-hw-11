@@ -12,6 +12,10 @@ export default class PixabayAxiosSearch {
         this.page = 1;
         this.pageSize = 40;
     }
+    
+    updateOrientation(newOrientation) {
+        this.orientation = newOrientation;
+    }
 
     updateRestrictions(newRestrictions) {
         this.restrictions = newRestrictions;

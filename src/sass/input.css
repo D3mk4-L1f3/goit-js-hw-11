@@ -13,12 +13,13 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  width: 350px;
+  width: 400px;
   opacity: 0.4;
   position: fixed;
   top: 5;
   z-index: 1;
 }
+
 .search-input:hover {
   opacity: 1;
 }
@@ -53,4 +54,10 @@
 
 .svg-current {
   fill: currentColor;
+}
+
+@media (max-width: 767px) {
+  .input-place {
+    width: 250px;
+  }
 }
