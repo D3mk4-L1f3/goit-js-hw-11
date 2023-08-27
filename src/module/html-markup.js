@@ -14,5 +14,5 @@ const htmlCode = `
     <div class="js-unattainable"></div>
 </div>
 `;
-
-export default htmlCode;
+const body = document.querySelector('body');
+body.insertAdjacentHTML('afterbegin', htmlCode);

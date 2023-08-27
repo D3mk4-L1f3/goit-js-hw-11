@@ -35,4 +35,4 @@ export default class PixabayAxiosSearch {
         this.page = 1;
     }
 }
-
+export const searchField = new PixabayAxiosSearch();
