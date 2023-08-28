@@ -1,9 +1,7 @@
 import Notiflix from 'notiflix';
-import { searchButton, axiosObserver, scrollBreakPoint, galleryContainer } from '../index';
+import { searchButton, axiosObserver, scrollBreakPoint, galleryContainer, inputField } from '../index';
 import { searchField } from './pixabay-api';
 import { getImage } from './scroll-event';
-
-export const inputField = document.querySelector('.input-place');
 
 export function onFormInputHandler() {
   const inputValue = inputField.value.trim();

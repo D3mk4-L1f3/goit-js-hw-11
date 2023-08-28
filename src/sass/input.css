@@ -36,7 +36,7 @@
 
 .input-place:focus {
   outline: transparent;
-  border: cadetblue;
+  border: none;
 }
 
 .search-btn {
