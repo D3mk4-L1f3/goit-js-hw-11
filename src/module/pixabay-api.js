@@ -1,5 +1,4 @@
 import axios from "axios";
-import Notiflix from "notiflix";
 
 const PIXABAY_API_KEY = '38987421-e938289573b3f0089dcf530c5';
 const PIXABAY_BASE_URL = 'https://pixabay.com/api/';
@@ -41,16 +40,3 @@ export default class PixabayAxiosSearch {
     }
 }
 export const searchField = new PixabayAxiosSearch();
-
-if (!sessionStorage.getItem('hasVisitedForm')) {
-  Notiflix.Confirm.show(
-    'Hi, you are at picture-searcher',
-    'Are you going to quick watch?',
-    'Yes',
-    'No',
-    function (isConfirmed) {
-      searchField.restrictions = isConfirmed ? 'false' : 'true';
-      sessionStorage.setItem('hasVisitedForm', true);
-    }
-  );
-}
