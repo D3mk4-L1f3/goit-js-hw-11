@@ -7,7 +7,7 @@
 
 .info {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   font-size: 10px;
   padding: 10px;
 }
@@ -43,7 +43,6 @@
   .info {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
     gap: 5px;
     padding: 5px;
     font-size: 7px;
