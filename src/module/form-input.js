@@ -1,7 +1,12 @@
 import Notiflix from 'notiflix';
-import { searchButton, axiosObserver, scrollBreakPoint, galleryContainer, inputField } from '../index';
 import { searchField } from './pixabay-api';
-import { getImage } from './scroll-event';
+import { onScrollEvent, getImage } from './scroll-event';
+
+export const searchButton = document.querySelector('.js-searcher');
+export const axiosObserver = new IntersectionObserver(onScrollEvent, { root: null, rootMargin: '600px' });
+export const scrollBreakPoint = document.querySelector('.js-unattainable');
+export const galleryContainer = document.querySelector('.js-gallery');
+export const inputField = document.querySelector('.input-place');
 
 export function onFormInputHandler() {
   const inputValue = inputField.value.trim();

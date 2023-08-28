@@ -13,11 +13,14 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
-  width: 400px;
+  width: 300px;
+  background-color: beige;
   opacity: 0.4;
   position: fixed;
   top: 5;
   z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .search-input:hover {
@@ -25,12 +28,9 @@
 }
 
 .input-place {
-  padding: 15px;
   font-size: 20px;
   text-align: center;
   background-color: beige;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
   border: none;
 }
 
@@ -44,8 +44,6 @@
   cursor: pointer;
   border: none;
   background-color: beige;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
 }
 
 .search-btn:focus {

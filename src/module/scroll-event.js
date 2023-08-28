@@ -1,9 +1,12 @@
 import Notiflix from 'notiflix'; 
+import SimpleLightbox from 'simplelightbox';
 
-import { axiosObserver, visualDecor, scrollBreakPoint, galleryContainer, endObserver } from '../index';
+import { axiosObserver, scrollBreakPoint, galleryContainer, } from './form-input';
 import { searchField } from './pixabay-api';
 import { onCreateMarkup } from './gallery-markup';
 
+export const visualDecor = new SimpleLightbox('.js-gallery a');
+export const endObserver = new IntersectionObserver(onEndElementScroll, { root: null, rootMargin: '700px' });
 
 export async function onScrollEvent(entries) {
     let totalPages = Number(localStorage.getItem('totalPages'));
